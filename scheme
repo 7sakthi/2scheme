@@ -1,0 +1,3827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Jansahayak | Government Scheme Finder</title>
+
+<style>
+
+/* =========================================================
+   JANSAHAYAK
+   Government Scheme Discovery Prototype
+   ========================================================= */
+
+:root {
+    --saffron: #e87518;
+    --saffron-dark: #c95f0c;
+    --green: #16833a;
+    --green-dark: #0e642b;
+    --navy: #243746;
+    --charcoal: #29323a;
+    --text: #30363b;
+    --muted: #69747c;
+    --border: #dfe4e7;
+    --cream: #faf9f6;
+    --white: #ffffff;
+    --light-green: #edf7f0;
+    --light-orange: #fff5eb;
+    --success: #157a35;
+    --warning: #b76b00;
+    --shadow: 0 10px 30px rgba(28, 43, 53, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* =========================================================
+   TOP GOVERNMENT BAR
+   ========================================================= */
+
+.top-strip {
+    height: 5px;
+    background: linear-gradient(
+        to right,
+        var(--saffron) 0%,
+        var(--saffron) 33.33%,
+        #ffffff 33.33%,
+        #ffffff 66.66%,
+        var(--green) 66.66%,
+        var(--green) 100%
+    );
+}
+
+.gov-bar {
+    background: #f4f5f3;
+    border-bottom: 1px solid #e1e4e2;
+    padding: 8px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #596168;
+}
+
+.gov-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.emblem-mini {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #777;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 9px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* =========================================================
+   MAIN NAVIGATION
+   ========================================================= */
+
+.navbar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    min-height: 78px;
+    padding: 0 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo-mark {
+    width: 45px;
+    height: 45px;
+    border: 2px solid var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: #fff;
+}
+
+.logo-mark::before {
+    content: "✦";
+    font-size: 23px;
+    color: var(--saffron);
+}
+
+.logo-text h1 {
+    font-family: Georgia, serif;
+    font-size: 24px;
+    color: var(--navy);
+    letter-spacing: 0.5px;
+}
+
+.logo-text p {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-links button {
+    background: transparent;
+    border: none;
+    padding: 10px 15px;
+    color: #4f5b63;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.nav-links button:hover {
+    color: var(--saffron-dark);
+}
+
+/* =========================================================
+   PAGE CONTAINERS
+   ========================================================= */
+
+.page {
+    display: none;
+    min-height: calc(100vh - 120px);
+}
+
+.page.active {
+    display: block;
+}
+
+.container {
+    width: min(1120px, 92%);
+    margin: auto;
+}
+
+/* =========================================================
+   HOME PAGE
+   ========================================================= */
+
+.hero {
+    padding: 70px 0 45px;
+    background:
+        radial-gradient(circle at 85% 15%, rgba(232,117,24,0.08), transparent 28%),
+        radial-gradient(circle at 10% 80%, rgba(22,131,58,0.07), transparent 30%),
+        var(--cream);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 55px;
+    align-items: center;
+}
+
+.official-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 12px;
+    background: #f2f4f3;
+    border: 1px solid #dce1de;
+    border-radius: 3px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #59645d;
+    margin-bottom: 22px;
+}
+
+.official-label span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+}
+
+.hero h2 {
+    font-family: Georgia, serif;
+    font-size: clamp(38px, 5vw, 65px);
+    line-height: 1.08;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 20px;
+}
+
+.hero h2 strong {
+    color: var(--saffron-dark);
+    font-weight: 600;
+}
+
+.hero-description {
+    max-width: 650px;
+    font-size: 17px;
+    color: #5e6970;
+    margin-bottom: 30px;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.primary-btn {
+    background: var(--saffron);
+    color: white;
+    border: none;
+    padding: 14px 26px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 3px;
+    transition: 0.2s;
+}
+
+.primary-btn:hover {
+    background: var(--saffron-dark);
+    transform: translateY(-1px);
+}
+
+.secondary-btn {
+    background: white;
+    color: var(--navy);
+    border: 1px solid #ccd2d5;
+    padding: 14px 26px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.secondary-btn:hover {
+    border-color: var(--green);
+}
+
+/* Hero information panel */
+
+.hero-panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--green);
+    box-shadow: var(--shadow);
+    padding: 28px;
+}
+
+.hero-panel h3 {
+    font-family: Georgia, serif;
+    font-size: 21px;
+    margin-bottom: 22px;
+    color: var(--navy);
+}
+
+.info-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 14px 0;
+    border-bottom: 1px solid #edf0f1;
+}
+
+.info-line:last-child {
+    border-bottom: none;
+}
+
+.info-number {
+    min-width: 28px;
+    height: 28px;
+    border: 1px solid var(--saffron);
+    color: var(--saffron-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.info-line strong {
+    display: block;
+    font-size: 14px;
+}
+
+.info-line span {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* =========================================================
+   TRUST SECTION
+   ========================================================= */
+
+.trust-section {
+    background: white;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 35px 0;
+}
+
+.trust-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.trust-item {
+    text-align: center;
+    padding: 15px;
+}
+
+.trust-item .symbol {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.trust-item strong {
+    display: block;
+    color: var(--navy);
+    font-size: 14px;
+}
+
+.trust-item span {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* =========================================================
+   FORM PAGE
+   ========================================================= */
+
+.form-page {
+    background: #f6f7f5;
+    padding: 45px 0 80px;
+}
+
+.page-heading {
+    margin-bottom: 32px;
+}
+
+.page-heading .eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--green-dark);
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.page-heading h2 {
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 35px;
+    font-weight: 500;
+    margin: 7px 0;
+}
+
+.page-heading p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* Progress */
+
+.progress-wrapper {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 17px 20px;
+    margin-bottom: 25px;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 9px;
+    color: var(--muted);
+}
+
+.progress-track {
+    height: 5px;
+    background: #e8ebeb;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 25%;
+    background: linear-gradient(to right, var(--saffron), var(--green));
+    transition: 0.4s;
+}
+
+/* FORM */
+
+.form-card {
+    background: white;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 35px;
+}
+
+.form-section {
+    margin-bottom: 38px;
+}
+
+.form-section:last-child {
+    margin-bottom: 10px;
+}
+
+.form-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #e4e7e8;
+    padding-bottom: 13px;
+    margin-bottom: 24px;
+}
+
+.section-number {
+    width: 29px;
+    height: 29px;
+    background: var(--navy);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.form-section-title h3 {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    color: var(--navy);
+    font-weight: 500;
+}
+
+.form-section-title p {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+/*
+   IMPORTANT:
+   All fields are vertical.
+   No side-by-side categories/gender cards.
+*/
+
+.field {
+    margin-bottom: 22px;
+}
+
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 7px;
+    color: #3c454b;
+}
+
+.required {
+    color: #b33b22;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    height: 47px;
+    padding: 0 13px;
+    border: 1px solid #cfd6d9;
+    background: #fff;
+    color: #30383e;
+    font-size: 14px;
+    border-radius: 2px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(22,131,58,0.08);
+}
+
+.field small {
+    display: block;
+    margin-top: 5px;
+    color: #7b858b;
+    font-size: 11px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.radio-option {
+    border: 1px solid #d7dcde;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background: #fff;
+    transition: 0.15s;
+}
+
+.radio-option:hover {
+    border-color: var(--green);
+    background: #fafdfb;
+}
+
+.radio-option input {
+    accent-color: var(--green);
+}
+
+.form-footer {
+    border-top: 1px solid var(--border);
+    padding-top: 25px;
+    margin-top: 35px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* =========================================================
+   RESULTS PAGE
+   ========================================================= */
+
+.results-page {
+    background: #f7f5f1;
+    padding: 45px 0 80px;
+}
+
+.results-header {
+    background: var(--navy);
+    color: white;
+    padding: 35px;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.results-header::after {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    border: 35px solid rgba(255,255,255,0.04);
+    border-radius: 50%;
+    right: -70px;
+    top: -90px;
+}
+
+.results-header .eyebrow {
+    color: #f1a76a;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.results-header h2 {
+    font-family: Georgia, serif;
+    font-weight: 500;
+    font-size: 34px;
+    margin: 5px 0;
+}
+
+.results-header p {
+    color: #cbd2d6;
+    font-size: 14px;
+}
+
+.result-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.scheme-card {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 23px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 25px;
+    transition: 0.2s;
+}
+
+.scheme-card:hover {
+    border-color: #bcc6ca;
+    box-shadow: 0 7px 25px rgba(28,43,53,0.08);
+    transform: translateY(-2px);
+}
+
+.scheme-code {
+    font-size: 10px;
+    color: var(--green-dark);
+    letter-spacing: 1px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.scheme-card h3 {
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 21px;
+    font-weight: 600;
+    margin: 5px 0 7px;
+}
+
+.scheme-card p {
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 720px;
+}
+
+.scheme-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 13px;
+}
+
+.scheme-tag {
+    font-size: 10px;
+    background: #f0f3f1;
+    border: 1px solid #dfe5e1;
+    color: #4e5b54;
+    padding: 4px 8px;
+}
+
+.match-box {
+    min-width: 110px;
+    text-align: center;
+    border-left: 1px solid #e3e6e7;
+    padding-left: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.match-percent {
+    font-size: 27px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.match-high {
+    color: var(--green);
+}
+
+.match-medium {
+    color: var(--warning);
+}
+
+.match-low {
+    color: #9b4c3d;
+}
+
+.match-label {
+    font-size: 10px;
+    color: #737c82;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    margin: 5px 0 13px;
+}
+
+.view-btn {
+    background: white;
+    border: 1px solid var(--navy);
+    color: var(--navy);
+    padding: 8px 13px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.view-btn:hover {
+    background: var(--navy);
+    color: white;
+}
+
+/* =========================================================
+   SCHEME DETAIL PAGE
+   ========================================================= */
+
+.detail-page {
+    background: #f8f8f6;
+    padding: 40px 0 80px;
+}
+
+.back-button {
+    border: none;
+    background: none;
+    color: var(--green-dark);
+    cursor: pointer;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.detail-hero {
+    background: var(--navy);
+    color: white;
+    padding: 42px;
+    border-left: 7px solid var(--saffron);
+}
+
+.detail-hero .code {
+    color: #f1ad78;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.detail-hero h2 {
+    font-family: Georgia, serif;
+    font-size: 35px;
+    font-weight: 500;
+    margin: 7px 0 10px;
+}
+
+.detail-hero p {
+    color: #d0d7da;
+    max-width: 850px;
+    font-size: 14px;
+}
+
+.detail-layout {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+}
+
+.detail-content {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 32px;
+}
+
+.detail-section {
+    margin-bottom: 33px;
+}
+
+.detail-section:last-child {
+    margin-bottom: 0;
+}
+
+.detail-section h3 {
+    font-family: Georgia, serif;
+    color: var(--navy);
+    font-size: 21px;
+    font-weight: 500;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #edf0ef;
+    margin-bottom: 13px;
+}
+
+.detail-section h3::after {
+    content: "";
+    display: block;
+    width: 45px;
+    height: 2px;
+    background: var(--saffron);
+    position: relative;
+    top: 12px;
+}
+
+.detail-section p {
+    color: #5c676d;
+    font-size: 14px;
+}
+
+.detail-section ul {
+    list-style: none;
+}
+
+.detail-section li {
+    position: relative;
+    padding: 8px 0 8px 22px;
+    color: #555f65;
+    font-size: 13px;
+    border-bottom: 1px solid #f0f1f1;
+}
+
+.detail-section li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: bold;
+}
+
+.detail-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.action-box {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 24px;
+}
+
+.action-box h3 {
+    font-family: Georgia, serif;
+    color: var(--navy);
+    margin-bottom: 13px;
+}
+
+.apply-btn {
+    width: 100%;
+    border: none;
+    background: var(--green);
+    color: white;
+    padding: 13px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 13px;
+}
+
+.apply-btn:hover {
+    background: var(--green-dark);
+}
+
+.match-summary {
+    text-align: center;
+    background: var(--light-green);
+    border: 1px solid #d4e9da;
+    padding: 20px;
+}
+
+.match-summary .number {
+    font-size: 35px;
+    color: var(--green-dark);
+    font-weight: 800;
+}
+
+.match-summary span {
+    display: block;
+    font-size: 11px;
+    color: #52715b;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    background: #27343d;
+    color: #d7dee1;
+    padding: 35px 0 25px;
+    border-top: 5px solid var(--saffron);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+}
+
+footer h3 {
+    color: white;
+    font-family: Georgia, serif;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+footer p {
+    font-size: 12px;
+    color: #aeb9be;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.12);
+    margin-top: 25px;
+    padding-top: 17px;
+    font-size: 11px;
+    color: #9ca8ad;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trust-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .scheme-card {
+        grid-template-columns: 1fr;
+    }
+
+    .match-box {
+        border-left: none;
+        border-top: 1px solid #e3e6e7;
+        padding: 17px 0 0;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .match-label {
+        margin: 0;
+    }
+
+    .form-card {
+        padding: 22px;
+    }
+
+    .detail-hero {
+        padding: 28px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .gov-bar {
+        padding: 7px 4%;
+    }
+
+    .navbar {
+        padding: 0 4%;
+    }
+
+    .container {
+        width: 92%;
+    }
+
+    .hero {
+        padding-top: 45px;
+    }
+
+    .hero h2 {
+        font-size: 38px;
+    }
+
+    .hero-panel {
+        padding: 20px;
+    }
+
+    .results-header h2 {
+        font-size: 27px;
+    }
+
+    .detail-hero h2 {
+        font-size: 27px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="top-strip"></div>
+
+<!-- =====================================================
+     GOVERNMENT-STYLE UTILITY BAR
+     ===================================================== -->
+
+<div class="gov-bar">
+    <div class="gov-left">
+        <div class="emblem-mini">भारत</div>
+        <span>भारत सरकार • Government of India</span>
+    </div>
+
+    <div>
+        Public Service Information Portal
+    </div>
+</div>
+
+
+<!-- =====================================================
+     NAVIGATION
+     ===================================================== -->
+
+<nav class="navbar">
+
+    <div class="logo-area">
+
+        <div class="logo-mark"></div>
+
+        <div class="logo-text">
+            <h1>Jansahayak</h1>
+            <p>Government Scheme Discovery</p>
+        </div>
+
+    </div>
+
+    <div class="nav-links">
+
+        <button onclick="showPage('homePage')">
+            Home
+        </button>
+
+        <button onclick="showPage('formPage')">
+            Find Schemes
+        </button>
+
+        <button onclick="showPage('homePage')">
+            About
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HOME PAGE
+     ===================================================== -->
+
+<section id="homePage" class="page active">
+
+    <div class="hero">
+
+        <div class="container">
+
+            <div class="hero-grid">
+
+                <div>
+
+                    <div class="official-label">
+                        <span></span>
+                        Public Benefit Scheme Discovery
+                    </div>
+
+                    <h2>
+                        Find the support
+                        <strong>you may be eligible for.</strong>
+                    </h2>
+
+                    <p class="hero-description">
+                        Jansahayak helps citizens discover relevant
+                        government schemes by understanding their
+                        age, income, social category, family situation,
+                        occupation and other requirements.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <button
+                            class="primary-btn"
+                            onclick="showPage('formPage')">
+                            Find My Schemes →
+                        </button>
+
+                        <button
+                            class="secondary-btn"
+                            onclick="document.getElementById('how').scrollIntoView()">
+                            How it works
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-panel">
+
+                    <h3>How Jansahayak works</h3>
+
+                    <div class="info-line">
+                        <div class="info-number">01</div>
+                        <div>
+                            <strong>Tell us about yourself</strong>
+                            <span>
+                                Answer a few simple questions.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="info-line">
+                        <div class="info-number">02</div>
+                        <div>
+                            <strong>We analyse your profile</strong>
+                            <span>
+                                Your answers are compared with scheme
+                                requirements.
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="info-line">
+                        <div class="info-number">03</div>
+                        <div>
+                            <strong>Explore your matches</strong>
+                            <span>
+                                See your five strongest matches and
+                                understand why they may be relevant.
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <section class="trust-section" id="how">
+
+        <div class="container">
+
+            <div class="trust-grid">
+
+                <div class="trust-item">
+                    <div class="symbol">◈</div>
+                    <strong>Personalised discovery</strong>
+                    <span>
+                        Results are based on the information you provide.
+                    </span>
+                </div>
+
+                <div class="trust-item">
+                    <div class="symbol">✓</div>
+                    <strong>Simple information</strong>
+                    <span>
+                        Eligibility, benefits and documents are organised
+                        clearly.
+                    </span>
+                </div>
+
+                <div class="trust-item">
+                    <div class="symbol">↗</div>
+                    <strong>Official application route</strong>
+                    <span>
+                        Use the relevant official portal to apply.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</section>
+
+
+<!-- =====================================================
+     PROFILE FORM PAGE
+     ===================================================== -->
+
+<section id="formPage" class="page form-page">
+
+    <div class="container">
+
+        <div class="page-heading">
+
+            <div class="eyebrow">
+                Step 01 • Citizen Profile
+            </div>
+
+            <h2>Tell us about yourself</h2>
+
+            <p>
+                The information helps the prototype identify schemes
+                that may be relevant to your situation.
+            </p>
+
+        </div>
+
+
+        <div class="progress-wrapper">
+
+            <div class="progress-label">
+                <span>Profile completion</span>
+                <span id="progressText">25%</span>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+        </div>
+
+
+        <form id="schemeForm" class="form-card">
+
+            <!-- PERSONAL INFORMATION -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-number">1</div>
+
+                    <div>
+                        <h3>Personal information</h3>
+                        <p>Basic information about the applicant</p>
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Full name <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Email address <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="example@email.com"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Age <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="age"
+                        min="1"
+                        max="120"
+                        placeholder="Enter your age"
+                        required>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Gender <span class="required">*</span>
+                    </label>
+
+                    <select id="gender" required>
+
+                        <option value="">
+                            Select gender
+                        </option>
+
+                        <option value="female">
+                            Female
+                        </option>
+
+                        <option value="male">
+                            Male
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        State / Union Territory
+                    </label>
+
+                    <select id="state">
+
+                        <option value="">
+                            Select your state
+                        </option>
+
+                        <option>Andhra Pradesh</option>
+                        <option>Arunachal Pradesh</option>
+                        <option>Assam</option>
+                        <option>Bihar</option>
+                        <option>Chhattisgarh</option>
+                        <option>Goa</option>
+                        <option>Gujarat</option>
+                        <option>Haryana</option>
+                        <option>Himachal Pradesh</option>
+                        <option>Jharkhand</option>
+                        <option>Karnataka</option>
+                        <option>Kerala</option>
+                        <option>Madhya Pradesh</option>
+                        <option>Maharashtra</option>
+                        <option>Manipur</option>
+                        <option>Meghalaya</option>
+                        <option>Mizoram</option>
+                        <option>Nagaland</option>
+                        <option>Odisha</option>
+                        <option>Punjab</option>
+                        <option>Rajasthan</option>
+                        <option>Sikkim</option>
+                        <option>Tamil Nadu</option>
+                        <option>Telangana</option>
+                        <option>Tripura</option>
+                        <option>Uttar Pradesh</option>
+                        <option>Uttarakhand</option>
+                        <option>West Bengal</option>
+                        <option>Delhi</option>
+                        <option>Jammu and Kashmir</option>
+                        <option>Ladakh</option>
+                        <option>Puducherry</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- SOCIAL CATEGORY -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-number">2</div>
+
+                    <div>
+                        <h3>Social category</h3>
+                        <p>Category information used by some schemes</p>
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Social category
+                    </label>
+
+                    <select id="category">
+
+                        <option value="">
+                            Select category
+                        </option>
+
+                        <option value="general">
+                            General
+                        </option>
+
+                        <option value="sc">
+                            Scheduled Caste (SC)
+                        </option>
+
+                        <option value="st">
+                            Scheduled Tribe (ST)
+                        </option>
+
+                        <option value="obc">
+                            Other Backward Class (OBC)
+                        </option>
+
+                        <option value="minority">
+                            Minority community
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Annual family income
+                    </label>
+
+                    <select id="income">
+
+                        <option value="">
+                            Select income range
+                        </option>
+
+                        <option value="below1">
+                            Below ₹1 lakh
+                        </option>
+
+                        <option value="1to2.5">
+                            ₹1 lakh – ₹2.5 lakh
+                        </option>
+
+                        <option value="2.5to5">
+                            ₹2.5 lakh – ₹5 lakh
+                        </option>
+
+                        <option value="5to10">
+                            ₹5 lakh – ₹10 lakh
+                        </option>
+
+                        <option value="above10">
+                            Above ₹10 lakh
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- FAMILY -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-number">3</div>
+
+                    <div>
+                        <h3>Family situation</h3>
+                        <p>This can be important for social-support schemes</p>
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Do you have living parents?
+                    </label>
+
+                    <div class="radio-group">
+
+                        <label class="radio-option">
+                            <input type="radio"
+                                   name="parents"
+                                   value="both">
+                            Both parents are living
+                        </label>
+
+                        <label class="radio-option">
+                            <input type="radio"
+                                   name="parents"
+                                   value="one">
+                            One parent is living
+                        </label>
+
+                        <label class="radio-option">
+                            <input type="radio"
+                                   name="parents"
+                                   value="none">
+                            Both parents have passed away
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Are you an orphan / without parental support?
+                    </label>
+
+                    <select id="orphan">
+
+                        <option value="">
+                            Select an option
+                        </option>
+
+                        <option value="yes">
+                            Yes
+                        </option>
+
+                        <option value="no">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Do you have a dependent family?
+                    </label>
+
+                    <select id="dependents">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="yes">
+                            Yes
+                        </option>
+
+                        <option value="no">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- OCCUPATION -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-number">4</div>
+
+                    <div>
+                        <h3>Occupation and livelihood</h3>
+                        <p>Tell us about your current work or studies</p>
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Current occupation
+                    </label>
+
+                    <select id="occupation">
+
+                        <option value="">
+                            Select occupation
+                        </option>
+
+                        <option value="student">
+                            Student
+                        </option>
+
+                        <option value="farmer">
+                            Farmer
+                        </option>
+
+                        <option value="business">
+                            Business owner / Entrepreneur
+                        </option>
+
+                        <option value="self">
+                            Self-employed
+                        </option>
+
+                        <option value="worker">
+                            Worker / Labourer
+                        </option>
+
+                        <option value="employee">
+                            Salaried employee
+                        </option>
+
+                        <option value="unemployed">
+                            Currently unemployed
+                        </option>
+
+                        <option value="artisan">
+                            Artisan / Craft worker
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        What type of support are you looking for?
+                    </label>
+
+                    <select id="need">
+
+                        <option value="">
+                            Select your primary requirement
+                        </option>
+
+                        <option value="education">
+                            Education / Scholarship
+                        </option>
+
+                        <option value="employment">
+                            Employment / Job
+                        </option>
+
+                        <option value="business">
+                            Business / Entrepreneurship
+                        </option>
+
+                        <option value="housing">
+                            Housing
+                        </option>
+
+                        <option value="health">
+                            Health / Medical support
+                        </option>
+
+                        <option value="farmer">
+                            Agriculture / Farmer support
+                        </option>
+
+                        <option value="women">
+                            Women-focused support
+                        </option>
+
+                        <option value="social">
+                            Social security / Welfare
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- DISABILITY -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-number">5</div>
+
+                    <div>
+                        <h3>Additional information</h3>
+                        <p>Optional information for broader matching</p>
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Do you have a disability?
+                    </label>
+
+                    <select id="disability">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="yes">
+                            Yes
+                        </option>
+
+                        <option value="no">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Are you currently unemployed?
+                    </label>
+
+                    <select id="unemployed">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="yes">
+                            Yes
+                        </option>
+
+                        <option value="no">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        Do you belong to a rural area?
+                    </label>
+
+                    <select id="rural">
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option value="yes">
+                            Yes
+                        </option>
+
+                        <option value="no">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-footer">
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+                    Find Matching Schemes →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESULTS PAGE
+     ===================================================== -->
+
+<section id="resultsPage" class="page results-page">
+
+    <div class="container">
+
+        <div class="results-header">
+
+            <div class="eyebrow">
+                Jansahayak Analysis
+            </div>
+
+            <h2 id="resultGreeting">
+                Schemes that may match you
+            </h2>
+
+            <p>
+                The following five schemes received the strongest
+                prototype matches based on the information provided.
+            </p>
+
+        </div>
+
+
+        <div id="resultList" class="result-list"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     DETAIL PAGE
+     ===================================================== -->
+
+<section id="detailPage" class="page detail-page">
+
+    <div class="container">
+
+        <button
+            class="back-button"
+            onclick="showResults()">
+            ← Back to matching schemes
+        </button>
+
+
+        <div id="schemeDetail"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+     ===================================================== -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div>
+                <h3>Jansahayak</h3>
+
+                <p>
+                    A prototype platform designed to make discovery
+                    of government welfare and support schemes easier
+                    for citizens.
+                </p>
+            </div>
+
+            <div>
+                <h3>Important</h3>
+
+                <p>
+                    Jansahayak is a scheme-discovery prototype.
+                    Eligibility should always be confirmed with the
+                    concerned government department or official portal.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 Jansahayak • Prototype for public-service
+            scheme discovery
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   SCHEME DATABASE
+   ========================================================= */
+
+const schemes = [
+
+{
+    id: 1,
+    code: "PMEGP",
+    name: "Prime Minister's Employment Generation Programme",
+    category: "business",
+    description:
+        "Credit-linked support programme intended to encourage employment generation through new micro-enterprises.",
+    eligibility:
+        "Generally intended for eligible individuals and organisations establishing new micro-enterprises, subject to programme conditions.",
+    benefits: [
+        "Margin money subsidy subject to applicable rules",
+        "Support for eligible new micro-enterprises",
+        "Encourages self-employment and local employment"
+    ],
+    documents: [
+        "Identity proof",
+        "Address proof",
+        "Project-related documents",
+        "Bank and financial documents where applicable"
+    ],
+    how:
+        "Applicants should check the current PMEGP guidelines and apply through the designated official channels.",
+    link:
+        "https://www.kviconline.gov.in/pmegpeportal/"
+},
+
+{
+    id: 2,
+    code: "MUDRA",
+    name: "Pradhan Mantri MUDRA Yojana",
+    category: "business",
+    description:
+        "A financing initiative supporting eligible micro and small business activities through participating lending institutions.",
+    eligibility:
+        "Eligible non-corporate, non-farm small and micro enterprises may seek financing subject to lender requirements.",
+    benefits: [
+        "Business finance through participating institutions",
+        "Different loan categories depending on requirement",
+        "Supports micro-enterprise activities"
+    ],
+    documents: [
+        "Identity proof",
+        "Address proof",
+        "Business information",
+        "Financial documents as required by lender"
+    ],
+    how:
+        "Approach an eligible participating bank or lending institution and check the current MUDRA requirements.",
+    link:
+        "https://www.mudra.org.in/"
+},
+
+{
+    id: 3,
+    code: "STAND-UP",
+    name: "Stand-Up India",
+    category: "business",
+    description:
+        "Facilitates bank loans for eligible SC/ST borrowers and women entrepreneurs for setting up greenfield enterprises.",
+    eligibility:
+        "Designed for eligible SC/ST borrowers and women entrepreneurs meeting the programme conditions.",
+    benefits: [
+        "Bank loan support for eligible greenfield enterprises",
+        "Support for entrepreneurship",
+        "Handholding and guidance through the programme ecosystem"
+    ],
+    documents: [
+        "Identity proof",
+        "Address proof",
+        "Business/project documents",
+        "Financial information"
+    ],
+    how:
+        "Check eligibility and approach the participating banking channel through the official Stand-Up India ecosystem.",
+    link:
+        "https://www.standupmitra.in/"
+},
+
+{
+    id: 4,
+    code: "STARTUP",
+    name: "Startup India",
+    category: "business",
+    description:
+        "Government initiative supporting India's startup ecosystem through recognition, resources and facilitation.",
+    eligibility:
+        "Eligible startups meeting the applicable recognition conditions can seek benefits under the Startup India framework.",
+    benefits: [
+        "Startup recognition ecosystem",
+        "Access to information and resources",
+        "Support for innovation and entrepreneurship"
+    ],
+    documents: [
+        "Incorporation information",
+        "Business details",
+        "Founder information",
+        "Required declarations"
+    ],
+    how:
+        "Review current Startup India recognition requirements and use the official portal.",
+    link:
+        "https://www.startupindia.gov.in/"
+},
+
+{
+    id: 5,
+    code: "PM-KISAN",
+    name: "Pradhan Mantri Kisan Samman Nidhi",
+    category: "farmer",
+    description:
+        "Income-support scheme for eligible landholding farmer families subject to applicable exclusion and verification rules.",
+    eligibility:
+        "Eligible landholding farmer families meeting the current programme requirements.",
+    benefits: [
+        "Income support through prescribed instalments",
+        "Direct benefit transfer mechanism",
+        "Farmer-oriented income assistance"
+    ],
+    documents: [
+        "Aadhaar or applicable identity",
+        "Land records",
+        "Bank account details"
+    ],
+    how:
+        "Check beneficiary status and current registration requirements on the official PM-KISAN portal.",
+    link:
+        "https://pmkisan.gov.in/"
+},
+
+{
+    id: 6,
+    code: "PMFBY",
+    name: "Pradhan Mantri Fasal Bima Yojana",
+    category: "farmer",
+    description:
+        "Crop insurance programme intended to provide financial protection against specified crop risks.",
+    eligibility:
+        "Eligible farmers and crops covered under the applicable notified areas and seasons.",
+    benefits: [
+        "Crop insurance coverage",
+        "Financial protection against specified crop losses",
+        "Support after eligible notified crop risks"
+    ],
+    documents: [
+        "Farmer identity",
+        "Land/cultivation details",
+        "Bank account information",
+        "Crop information"
+    ],
+    how:
+        "Check current notified crops, areas, seasons and enrolment arrangements.",
+    link:
+        "https://pmfby.gov.in/"
+},
+
+{
+    id: 7,
+    code: "KCC",
+    name: "Kisan Credit Card",
+    category: "farmer",
+    description:
+        "Credit facility intended to meet eligible short-term agricultural and allied activity requirements.",
+    eligibility:
+        "Eligible farmers and agricultural borrowers subject to applicable lending rules.",
+    benefits: [
+        "Agricultural credit access",
+        "Working capital for eligible farming activities",
+        "Support for allied agricultural needs"
+    ],
+    documents: [
+        "Identity proof",
+        "Land/cultivation details",
+        "Bank documents"
+    ],
+    how:
+        "Approach a participating bank and check the latest KCC requirements.",
+    link:
+        "https://www.myscheme.gov.in/"
+},
+
+{
+    id: 8,
+    code: "PMAY",
+    name: "Pradhan Mantri Awas Yojana",
+    category: "housing",
+    description:
+        "Government housing programme supporting eligible beneficiaries under applicable rural or urban components.",
+    eligibility:
+        "Eligibility depends on the relevant PMAY component, location and current programme criteria.",
+    benefits: [
+        "Housing assistance under applicable components",
+        "Support for eligible households",
+        "Housing-focused financial assistance"
+    ],
+    documents: [
+        "Identity proof",
+        "Address proof",
+        "Income/family information",
+        "Property or housing documents where applicable"
+    ],
+    how:
+        "Identify the applicable rural or urban component and check the official programme portal.",
+    link:
+        "https://pmaymis.gov.in/"
+},
+
+{
+    id: 9,
+    code: "PM-JAY",
+    name: "Ayushman Bharat PM-JAY",
+    category: "health",
+    description:
+        "Publicly funded health assurance programme for eligible beneficiary families.",
+    eligibility:
+        "Eligibility is determined through the applicable beneficiary identification framework.",
+    benefits: [
+        "Cashless hospitalisation for eligible services",
+        "Coverage at empanelled facilities",
+        "Health protection for eligible beneficiaries"
+    ],
+    documents: [
+        "Beneficiary identification",
+        "Identity documentation as required",
+        "Other documents requested by the facility"
+    ],
+    how:
+        "Check eligibility through the official PM-JAY channels or an authorised health facility.",
+    link:
+        "https://pmjay.gov.in/"
+},
+
+{
+    id: 10,
+    code: "PM-JAN-DHAN",
+    name: "Pradhan Mantri Jan-Dhan Yojana",
+    category: "social",
+    description:
+        "Financial inclusion programme aimed at expanding access to banking and financial services.",
+    eligibility:
+        "Individuals seeking access to eligible basic banking services subject to current banking rules.",
+    benefits: [
+        "Access to basic banking services",
+        "Financial inclusion",
+        "Eligible account-linked facilities"
+    ],
+    documents: [
+        "Identity proof",
+        "Address information",
+        "KYC documents"
+    ],
+    how:
+        "Approach a participating bank or authorised banking outlet.",
+    link:
+        "https://pmjdy.gov.in/"
+},
+
+{
+    id: 11,
+    code: "PM-SVANIDHI",
+    name: "PM Street Vendor's AtmaNirbhar Nidhi",
+    category: "business",
+    description:
+        "Credit support programme for eligible street vendors.",
+    eligibility:
+        "Eligible street vendors meeting current identification and programme conditions.",
+    benefits: [
+        "Working-capital loan support",
+        "Digital transaction incentives under applicable provisions",
+        "Credit-linked support"
+    ],
+    documents: [
+        "Vendor identification",
+        "Identity proof",
+        "Bank information"
+    ],
+    how:
+        "Check eligibility and apply through the designated official channels.",
+    link:
+        "https://pmsvanidhi.mohua.gov.in/"
+},
+
+{
+    id: 12,
+    code: "SKILL-INDIA",
+    name: "Skill India",
+    category: "employment",
+    description:
+        "National skilling ecosystem providing access to vocational training and skill development opportunities.",
+    eligibility:
+        "Eligibility varies according to the specific training programme.",
+    benefits: [
+        "Skill development opportunities",
+        "Industry-oriented training",
+        "Employment-oriented programmes"
+    ],
+    documents: [
+        "Identity proof",
+        "Educational information",
+        "Other documents depending on course"
+    ],
+    how:
+        "Search for suitable training programmes through the official Skill India ecosystem.",
+    link:
+        "https://www.skillindiadigital.gov.in/"
+},
+
+{
+    id: 13,
+    code: "PMKVY",
+    name: "Pradhan Mantri Kaushal Vikas Yojana",
+    category: "employment",
+    description:
+        "Skill development programme supporting eligible candidates through approved training and certification.",
+    eligibility:
+        "Eligibility varies according to the current training programme and candidate requirements.",
+    benefits: [
+        "Skill training",
+        "Assessment and certification where applicable",
+        "Employment-oriented learning"
+    ],
+    documents: [
+        "Identity proof",
+        "Educational information",
+        "Registration details"
+    ],
+    how:
+        "Find current eligible training programmes through the official skilling ecosystem.",
+    link:
+        "https://www.pmkvyofficial.org/"
+},
+
+{
+    id: 14,
+    code: "NSP",
+    name: "National Scholarship Portal",
+    category: "education",
+    description:
+        "Central platform for various scholarship schemes offered by central and other participating authorities.",
+    eligibility:
+        "Eligibility varies by scholarship scheme, education level, category and income criteria.",
+    benefits: [
+        "Scholarship opportunities",
+        "Online application",
+        "Application tracking"
+    ],
+    documents: [
+        "Student identity",
+        "Educational records",
+        "Income/category certificates where applicable",
+        "Bank details"
+    ],
+    how:
+        "Search the current scholarships on the National Scholarship Portal and apply for the relevant scheme.",
+    link:
+        "https://scholarships.gov.in/"
+},
+
+{
+    id: 15,
+    code: "SUKANYA",
+    name: "Sukanya Samriddhi Account",
+    category: "women",
+    description:
+        "Small savings scheme intended for the financial future of eligible girl children.",
+    eligibility:
+        "Eligible girl children subject to current account-opening rules.",
+    benefits: [
+        "Long-term savings",
+        "Government-backed small savings framework",
+        "Tax treatment subject to applicable rules"
+    ],
+    documents: [
+        "Girl child's birth certificate",
+        "Guardian identity",
+        "Address/KYC documents"
+    ],
+    how:
+        "Open the account through an authorised bank or post office according to current rules.",
+    link:
+        "https://www.indiapost.gov.in/"
+},
+
+{
+    id: 16,
+    code: "PMMVY",
+    name: "Pradhan Mantri Matru Vandana Yojana",
+    category: "women",
+    description:
+        "Maternity benefit programme for eligible women under applicable conditions.",
+    eligibility:
+        "Eligible women satisfying the current scheme conditions.",
+    benefits: [
+        "Maternity benefit support",
+        "Support connected with pregnancy and childbirth",
+        "Benefit transfer under applicable provisions"
+    ],
+    documents: [
+        "Identity proof",
+        "Pregnancy/childbirth related records",
+        "Bank details"
+    ],
+    how:
+        "Contact the relevant local health or women-and-child development authority.",
+    link:
+        "https://wcd.gov.in/"
+},
+
+{
+    id: 17,
+    code: "PMUY",
+    name: "Pradhan Mantri Ujjwala Yojana",
+    category: "women",
+    description:
+        "Clean cooking fuel support programme for eligible households.",
+    eligibility:
+        "Eligible households meeting the current Ujjwala criteria.",
+    benefits: [
+        "LPG connection support",
+        "Cleaner cooking fuel access",
+        "Household energy support"
+    ],
+    documents: [
+        "Identity proof",
+        "Address information",
+        "Household details"
+    ],
+    how:
+        "Check eligibility and application options with authorised LPG distributors.",
+    link:
+        "https://www.pmuy.gov.in/"
+},
+
+{
+    id: 18,
+    code: "PM-SYM",
+    name: "Pradhan Mantri Shram Yogi Maandhan",
+    category: "social",
+    description:
+        "Pension scheme for eligible unorganised workers.",
+    eligibility:
+        "Eligible unorganised workers meeting the current age, income and other requirements.",
+    benefits: [
+        "Pension-oriented social security",
+        "Contribution-based scheme",
+        "Support for eligible unorganised workers"
+    ],
+    documents: [
+        "Aadhaar",
+        "Bank account",
+        "Mobile number"
+    ],
+    how:
+        "Check current enrolment arrangements through authorised channels.",
+    link:
+        "https://labour.gov.in/"
+},
+
+{
+    id: 19,
+    code: "NSAP",
+    name: "National Social Assistance Programme",
+    category: "social",
+    description:
+        "Social assistance framework covering eligible beneficiaries under its different components.",
+    eligibility:
+        "Eligibility varies according to the relevant NSAP component and current rules.",
+    benefits: [
+        "Social assistance",
+        "Support for eligible vulnerable groups",
+        "Pension/assistance under applicable components"
+    ],
+    documents: [
+        "Identity proof",
+        "Income/BPL-related information where applicable",
+        "Bank details"
+    ],
+    how:
+        "Contact the appropriate state or local authority for the applicable component.",
+    link:
+        "https://nsap.nic.in/"
+},
+
+{
+    id: 20,
+    code: "PMJDY",
+    name: "Financial Inclusion Services",
+    category: "social",
+    description:
+        "Banking access and financial inclusion services available through the national financial inclusion ecosystem.",
+    eligibility:
+        "Eligibility and services vary according to the account and banking product.",
+    benefits: [
+        "Banking access",
+        "Digital financial services",
+        "Access to eligible financial facilities"
+    ],
+    documents: [
+        "KYC documents",
+        "Identity proof",
+        "Address information"
+    ],
+    how:
+        "Approach an authorised banking outlet.",
+    link:
+        "https://pmjdy.gov.in/"
+},
+
+{
+    id: 21,
+    code: "APY",
+    name: "Atal Pension Yojana",
+    category: "social",
+    description:
+        "Government-backed pension scheme designed for eligible subscribers.",
+    eligibility:
+        "Eligibility depends on the current age and account conditions.",
+    benefits: [
+        "Pension after applicable age",
+        "Government-supported pension framework",
+        "Long-term retirement planning"
+    ],
+    documents: [
+        "Aadhaar",
+        "Bank account",
+        "Mobile number"
+    ],
+    how:
+        "Approach a participating bank or financial institution.",
+    link:
+        "https://www.pfrda.org.in/"
+},
+
+{
+    id: 22,
+    code: "PMJJBY",
+    name: "Pradhan Mantri Jeevan Jyoti Bima Yojana",
+    category: "social",
+    description:
+        "Low-cost life insurance scheme available through participating financial institutions subject to eligibility.",
+    eligibility:
+        "Eligible account holders within the applicable age range and enrolment conditions.",
+    benefits: [
+        "Life insurance coverage",
+        "Affordable annual premium structure",
+        "Financial protection for eligible subscribers"
+    ],
+    documents: [
+        "Bank account",
+        "KYC information",
+        "Consent/nomination details"
+    ],
+    how:
+        "Contact the participating bank or financial institution.",
+    link:
+        "https://financialservices.gov.in/"
+},
+
+{
+    id: 23,
+    code: "PMSBY",
+    name: "Pradhan Mantri Suraksha Bima Yojana",
+    category: "social",
+    description:
+        "Accident insurance scheme available through participating banks and institutions.",
+    eligibility:
+        "Eligible account holders meeting current age and enrolment conditions.",
+    benefits: [
+        "Accident insurance",
+        "Affordable premium",
+        "Financial support for eligible accidental events"
+    ],
+    documents: [
+        "Bank account",
+        "KYC information",
+        "Nominee information"
+    ],
+    how:
+        "Contact a participating bank.",
+    link:
+        "https://financialservices.gov.in/"
+},
+
+{
+    id: 24,
+    code: "NULM",
+    name: "DAY-NULM",
+    category: "employment",
+    description:
+        "Urban livelihoods mission supporting skills, self-employment and livelihoods for eligible urban poor.",
+    eligibility:
+        "Eligibility depends on the relevant component and local implementation.",
+    benefits: [
+        "Skill training",
+        "Self-employment support",
+        "Urban livelihood assistance"
+    ],
+    documents: [
+        "Identity proof",
+        "Address information",
+        "Income or livelihood information"
+    ],
+    how:
+        "Contact the urban local body or relevant state implementation authority.",
+    link:
+        "https://nulm.gov.in/"
+},
+
+{
+    id: 25,
+    code: "NRLM",
+    name: "DAY-NRLM",
+    category: "employment",
+    description:
+        "Rural livelihoods mission supporting self-help groups and rural livelihood opportunities.",
+    eligibility:
+        "Eligibility depends on local programme implementation and applicable criteria.",
+    benefits: [
+        "Self-help group support",
+        "Livelihood opportunities",
+        "Skill and enterprise support"
+    ],
+    documents: [
+        "Identity information",
+        "Household information",
+        "SHG-related documents where applicable"
+    ],
+    how:
+        "Contact the local rural development authority or SHG ecosystem.",
+    link:
+        "https://nrlm.gov.in/"
+},
+
+{
+    id: 26,
+    code: "MGNREGA",
+    name: "Mahatma Gandhi National Rural Employment Guarantee Scheme",
+    category: "employment",
+    description:
+        "Rural employment guarantee framework providing wage employment subject to applicable provisions.",
+    eligibility:
+        "Rural households whose adult members volunteer to do unskilled manual work, subject to programme rules.",
+    benefits: [
+        "Demand-based rural wage employment",
+        "Employment support",
+        "Creation of rural community assets"
+    ],
+    documents: [
+        "Job card information",
+        "Identity documents",
+        "Household details"
+    ],
+    how:
+        "Contact the Gram Panchayat or local programme office.",
+    link:
+        "https://nrega.nic.in/"
+},
+
+{
+    id: 27,
+    code: "PMGSY",
+    name: "Pradhan Mantri Gram Sadak Yojana",
+    category: "social",
+    description:
+        "Rural connectivity programme focused on eligible rural road infrastructure.",
+    eligibility:
+        "This is primarily an infrastructure programme rather than an individual cash-benefit scheme.",
+    benefits: [
+        "Improved rural connectivity",
+        "Road infrastructure development",
+        "Better access to services and markets"
+    ],
+    documents: [
+        "Not generally an individual-beneficiary application scheme"
+    ],
+    how:
+        "Information is generally available through the programme and implementing authorities.",
+    link:
+        "https://pmgsy.nic.in/"
+},
+
+{
+    id: 28,
+    code: "PMKSY",
+    name: "Pradhan Mantri Krishi Sinchayee Yojana",
+    category: "farmer",
+    description:
+        "Agricultural irrigation and water-management programme.",
+    eligibility:
+        "Eligibility varies according to component and state implementation.",
+    benefits: [
+        "Irrigation support",
+        "Water-use efficiency",
+        "Agricultural water management"
+    ],
+    documents: [
+        "Farmer identity",
+        "Land information",
+        "Application documents as required"
+    ],
+    how:
+        "Contact the relevant agriculture or irrigation department.",
+    link:
+        "https://pmksy.gov.in/"
+},
+
+{
+    id: 29,
+    code: "PM-KUSUM",
+    name: "PM-KUSUM",
+    category: "farmer",
+    description:
+        "Programme supporting renewable-energy solutions for the agricultural sector.",
+    eligibility:
+        "Eligibility varies by component and state implementation.",
+    benefits: [
+        "Solar energy support",
+        "Agricultural energy solutions",
+        "Support for decentralised renewable energy"
+    ],
+    documents: [
+        "Farmer identity",
+        "Land details",
+        "Bank information"
+    ],
+    how:
+        "Check the current state-specific implementation and application process.",
+    link:
+        "https://pmkusum.mnre.gov.in/"
+},
+
+{
+    id: 30,
+    code: "FPO",
+    name: "Formation and Promotion of Farmer Producer Organisations",
+    category: "farmer",
+    description:
+        "Support framework intended to strengthen farmer producer organisations.",
+    eligibility:
+        "Farmer groups and eligible producer organisations under applicable guidelines.",
+    benefits: [
+        "Collective marketing",
+        "Capacity building",
+        "Enterprise development support"
+    ],
+    documents: [
+        "Organisation documents",
+        "Member/farmer records",
+        "Registration documents"
+    ],
+    how:
+        "Contact implementing agencies and agriculture authorities.",
+    link:
+        "https://agriwelfare.gov.in/"
+},
+
+{
+    id: 31,
+    code: "PMFME",
+    name: "PM Formalisation of Micro Food Processing Enterprises",
+    category: "business",
+    description:
+        "Support programme for formalisation and strengthening of eligible micro food-processing enterprises.",
+    eligibility:
+        "Eligible micro food-processing enterprises subject to current guidelines.",
+    benefits: [
+        "Enterprise support",
+        "Capacity building",
+        "Food-processing sector assistance"
+    ],
+    documents: [
+        "Identity proof",
+        "Business details",
+        "Project information",
+        "Bank details"
+    ],
+    how:
+        "Check the current PMFME guidelines and state implementation process.",
+    link:
+        "https://pmfme.mofpi.gov.in/"
+},
+
+{
+    id: 32,
+    code: "CGTMSE",
+    name: "Credit Guarantee Scheme for Micro and Small Enterprises",
+    category: "business",
+    description:
+        "Credit guarantee framework supporting eligible lending to micro and small enterprises.",
+    eligibility:
+        "Eligible MSE borrowers through participating lending institutions.",
+    benefits: [
+        "Credit guarantee support",
+        "Improved access to institutional credit",
+        "Support for eligible MSE financing"
+    ],
+    documents: [
+        "Business documents",
+        "Financial information",
+        "KYC documents"
+    ],
+    how:
+        "Discuss eligibility with a participating lender.",
+    link:
+        "https://www.cgtmse.in/"
+},
+
+{
+    id: 33,
+    code: "NSFDC",
+    name: "National Scheduled Castes Finance and Development Corporation",
+    category: "business",
+    description:
+        "Financial development support for eligible members of Scheduled Castes through applicable programmes.",
+    eligibility:
+        "Eligible beneficiaries meeting current NSFDC programme conditions.",
+    benefits: [
+        "Concessional finance under eligible programmes",
+        "Skill and livelihood support",
+        "Enterprise assistance"
+    ],
+    documents: [
+        "Category certificate",
+        "Identity proof",
+        "Income information",
+        "Project/business documents"
+    ],
+    how:
+        "Check current programmes through NSFDC and implementing agencies.",
+    link:
+        "https://nsfdc.nic.in/"
+},
+
+{
+    id: 34,
+    code: "NSTFDC",
+    name: "National Scheduled Tribes Finance and Development Corporation",
+    category: "business",
+    description:
+        "Financial and livelihood development support for eligible Scheduled Tribe beneficiaries.",
+    eligibility:
+        "Eligible ST beneficiaries under current programme conditions.",
+    benefits: [
+        "Concessional finance",
+        "Livelihood support",
+        "Skill and enterprise assistance"
+    ],
+    documents: [
+        "ST certificate",
+        "Identity proof",
+        "Income information",
+        "Project documents"
+    ],
+    how:
+        "Check the current programmes and implementing agencies.",
+    link:
+        "https://nstfdc.tribal.gov.in/"
+},
+
+{
+    id: 35,
+    code: "PM-DAKSH",
+    name: "PM-DAKSH",
+    category: "employment",
+    description:
+        "Skill development initiative for eligible disadvantaged groups.",
+    eligibility:
+        "Eligibility depends on the target group and current programme conditions.",
+    benefits: [
+        "Skill training",
+        "Employability development",
+        "Livelihood-oriented training"
+    ],
+    documents: [
+        "Identity proof",
+        "Category/income documents where applicable",
+        "Educational information"
+    ],
+    how:
+        "Check current training opportunities through the official portal.",
+    link:
+        "https://pmdaksh.dosje.gov.in/"
+},
+
+{
+    id: 36,
+    code: "NAMASTE",
+    name: "NAMASTE",
+    category: "employment",
+    description:
+        "Initiative aimed at promoting safety and dignity of sanitation workers and improving mechanised sanitation practices.",
+    eligibility:
+        "Eligibility and support depend on the programme's current identification framework.",
+    benefits: [
+        "Occupational safety support",
+        "Skill and livelihood support",
+        "Mechanisation-related assistance"
+    ],
+    documents: [
+        "Worker identification",
+        "Identity documents",
+        "Other records as required"
+    ],
+    how:
+        "Contact the implementing urban local body or concerned authority.",
+    link:
+        "https://socialjustice.gov.in/"
+},
+
+{
+    id: 37,
+    code: "UDID",
+    name: "Unique Disability ID Project",
+    category: "social",
+    description:
+        "National disability identity framework intended to create a standardised disability ID.",
+    eligibility:
+        "Persons with disabilities eligible under applicable disability certification rules.",
+    benefits: [
+        "Disability identity documentation",
+        "Simplified access to relevant services",
+        "Digital disability records"
+    ],
+    documents: [
+        "Identity proof",
+        "Medical/disability certification documents",
+        "Photograph"
+    ],
+    how:
+        "Use the official UDID platform and follow the disability certification process.",
+    link:
+        "https://www.swavlambancard.gov.in/"
+},
+
+{
+    id: 38,
+    code: "NIPUN",
+    name: "NIPUN Bharat",
+    category: "education",
+    description:
+        "National initiative focused on foundational literacy and numeracy.",
+    eligibility:
+        "Primarily an education-system initiative rather than an individual financial benefit.",
+    benefits: [
+        "Foundational learning support",
+        "Improved early education outcomes",
+        "School-level learning initiatives"
+    ],
+    documents: [
+        "Generally not an individual application scheme"
+    ],
+    how:
+        "Information is implemented through the school education system.",
+    link:
+        "https://dsel.education.gov.in/"
+},
+
+{
+    id: 39,
+    code: "MIDDAY",
+    name: "PM POSHAN",
+    category: "education",
+    description:
+        "School meal programme supporting nutrition among eligible schoolchildren.",
+    eligibility:
+        "Eligible students in participating schools under the programme.",
+    benefits: [
+        "School meal support",
+        "Nutritional assistance",
+        "Support for school participation"
+    ],
+    documents: [
+        "School enrolment information"
+    ],
+    how:
+        "Contact the participating school or education department.",
+    link:
+        "https://pmposhan.education.gov.in/"
+},
+
+{
+    id: 40,
+    code: "BETI-BACHAO",
+    name: "Beti Bachao Beti Padhao",
+    category: "women",
+    description:
+        "Government initiative focused on the value, protection and education of the girl child.",
+    eligibility:
+        "Programme activities vary by component and implementation area.",
+    benefits: [
+        "Awareness and community initiatives",
+        "Support for girl-child education objectives",
+        "Promotion of gender equality"
+    ],
+    documents: [
+        "Depends on the specific service or programme component"
+    ],
+    how:
+        "Contact the relevant women and child development authority.",
+    link:
+        "https://wcd.gov.in/"
+},
+
+{
+    id: 41,
+    code: "MISSION-SHAKTI",
+    name: "Mission Shakti",
+    category: "women",
+    description:
+        "Umbrella programme supporting women's safety, security and empowerment.",
+    eligibility:
+        "Eligibility depends on the specific component or service.",
+    benefits: [
+        "Women-focused support services",
+        "Safety and empowerment services",
+        "Information and assistance"
+    ],
+    documents: [
+        "Varies by service"
+    ],
+    how:
+        "Contact the relevant women and child development authority or service centre.",
+    link:
+        "https://wcd.gov.in/"
+},
+
+{
+    id: 42,
+    code: "PM-AYUSHMAN",
+    name: "Ayushman Bharat Digital Health Mission",
+    category: "health",
+    description:
+        "Digital health ecosystem intended to support interoperable digital health services.",
+    eligibility:
+        "Services and features depend on the applicable digital health ecosystem.",
+    benefits: [
+        "Digital health identity and records",
+        "Improved health information portability",
+        "Digital health ecosystem access"
+    ],
+    documents: [
+        "Identity information",
+        "Mobile number"
+    ],
+    how:
+        "Use authorised digital health services and official channels.",
+    link:
+        "https://abdm.gov.in/"
+},
+
+{
+    id: 43,
+    code: "POSHAN",
+    name: "POSHAN Abhiyaan",
+    category: "health",
+    description:
+        "National nutrition mission focused on improving nutrition outcomes.",
+    eligibility:
+        "Services depend on the relevant nutrition programme and beneficiary group.",
+    benefits: [
+        "Nutrition support",
+        "Awareness and monitoring",
+        "Maternal and child nutrition initiatives"
+    ],
+    documents: [
+        "Varies by service"
+    ],
+    how:
+        "Contact the local Anganwadi or health and nutrition service.",
+    link:
+        "https://poshanabhiyaan.gov.in/"
+},
+
+{
+    id: 44,
+    code: "PM-DEVINE",
+    name: "PM-DevINE",
+    category: "social",
+    description:
+        "Development initiative for eligible projects in the North Eastern Region.",
+    eligibility:
+        "Primarily project/institution focused rather than an individual cash-benefit programme.",
+    benefits: [
+        "Infrastructure development",
+        "Livelihood opportunities",
+        "Regional development projects"
+    ],
+    documents: [
+        "Project documents where applicable"
+    ],
+    how:
+        "Information is available through the relevant government departments.",
+    link:
+        "https://mdoner.gov.in/"
+},
+
+{
+    id: 45,
+    code: "PM-YASASVI",
+    name: "PM YASASVI",
+    category: "education",
+    description:
+        "Scholarship and educational support framework for eligible students from specified disadvantaged groups.",
+    eligibility:
+        "Eligibility varies by current component, class, category and income conditions.",
+    benefits: [
+        "Educational support",
+        "Scholarship opportunities",
+        "Support for eligible students"
+    ],
+    documents: [
+        "Student identity",
+        "Category certificate",
+        "Income certificate",
+        "Educational records"
+    ],
+    how:
+        "Check the current scholarship notification and application portal.",
+    link:
+        "https://yet.nta.ac.in/"
+},
+
+{
+    id: 46,
+    code: "POST-MATRIC",
+    name: "Post-Matric Scholarship Schemes",
+    category: "education",
+    description:
+        "Scholarship opportunities for eligible students studying after secondary education.",
+    eligibility:
+        "Varies by category, income, course and implementing authority.",
+    benefits: [
+        "Educational financial assistance",
+        "Support for eligible post-matric students",
+        "Scholarship payments subject to rules"
+    ],
+    documents: [
+        "Student identity",
+        "Income certificate",
+        "Category certificate",
+        "Institution details"
+    ],
+    how:
+        "Check the relevant scholarship authority and National Scholarship Portal where applicable.",
+    link:
+        "https://scholarships.gov.in/"
+},
+
+{
+    id: 47,
+    code: "PM-VIDYALAXMI",
+    name: "PM-Vidyalaxmi",
+    category: "education",
+    description:
+        "Education finance support framework for eligible students pursuing higher education.",
+    eligibility:
+        "Eligibility depends on the institution, course and current scheme conditions.",
+    benefits: [
+        "Education loan support",
+        "Financial assistance mechanisms",
+        "Higher education financing"
+    ],
+    documents: [
+        "Admission proof",
+        "Academic records",
+        "Identity documents",
+        "Financial documents"
+    ],
+    how:
+        "Check the current official education finance platform and participating institutions.",
+    link:
+        "https://www.vidyalakshmi.co.in/"
+},
+
+{
+    id: 48,
+    code: "SVAMITVA",
+    name: "SVAMITVA Scheme",
+    category: "social",
+    description:
+        "Rural property mapping and record initiative using modern surveying technology.",
+    eligibility:
+        "Applicable to eligible rural property holders in participating areas.",
+    benefits: [
+        "Property documentation",
+        "Improved rural property records",
+        "Support for property-related economic activity"
+    ],
+    documents: [
+        "Property information",
+        "Identity details",
+        "Local survey information"
+    ],
+    how:
+        "Contact the relevant Panchayat/revenue authorities.",
+    link:
+        "https://svamitva.nic.in/"
+},
+
+{
+    id: 49,
+    code: "PM-AJAY",
+    name: "PM-AJAY",
+    category: "social",
+    description:
+        "Development and welfare framework supporting eligible Scheduled Caste communities.",
+    eligibility:
+        "Eligibility depends on the relevant component and current guidelines.",
+    benefits: [
+        "Community development",
+        "Livelihood-related support",
+        "Development assistance"
+    ],
+    documents: [
+        "Category certificate",
+        "Identity documents",
+        "Income or project information where required"
+    ],
+    how:
+        "Check the current component and implementing department.",
+    link:
+        "https://socialjustice.gov.in/"
+},
+
+{
+    id: 50,
+    code: "PM-JANMAN",
+    name: "PM-JANMAN",
+    category: "social",
+    description:
+        "Mission focused on the socio-economic development of Particularly Vulnerable Tribal Groups.",
+    eligibility:
+        "Focused on eligible PVTG communities under applicable programme identification.",
+    benefits: [
+        "Housing and basic services",
+        "Livelihood support",
+        "Infrastructure and social development"
+    ],
+    documents: [
+        "Identity/community records",
+        "Household information",
+        "Documents required by the implementing authority"
+    ],
+    how:
+        "Contact the relevant tribal welfare and local implementing authorities.",
+    link:
+        "https://tribal.nic.in/"
+}
+
+];
+
+
+/* =========================================================
+   USER PROFILE
+   ========================================================= */
+
+let userProfile = {};
+let currentResults = [];
+
+
+/* =========================================================
+   PAGE NAVIGATION
+   ========================================================= */
+
+function showPage(pageId) {
+
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   RADIO VALUE HELPER
+   ========================================================= */
+
+function getRadioValue(name) {
+
+    const selected =
+        document.querySelector(
+            'input[name="' + name + '"]:checked'
+        );
+
+    return selected ? selected.value : "";
+}
+
+
+/* =========================================================
+   MATCHING ENGINE
+   ========================================================= */
+
+function calculateMatch(scheme, profile) {
+
+    let score = 45;
+
+    /* Need is the strongest signal */
+
+    if (profile.need === scheme.category) {
+        score += 32;
+    }
+
+    /* Occupation */
+
+    if (
+        scheme.category === "farmer" &&
+        profile.occupation === "farmer"
+    ) {
+        score += 14;
+    }
+
+    if (
+        scheme.category === "business" &&
+        (
+            profile.occupation === "business" ||
+            profile.occupation === "self" ||
+            profile.occupation === "artisan"
+        )
+    ) {
+        score += 12;
+    }
+
+    if (
+        scheme.category === "employment" &&
+        (
+            profile.occupation === "unemployed" ||
+            profile.unemployed === "yes"
+        )
+    ) {
+        score += 12;
+    }
+
+    if (
+        scheme.category === "education" &&
+        profile.occupation === "student"
+    ) {
+        score += 12;
+    }
+
+    if (
+        scheme.category === "women" &&
+        profile.gender === "female"
+    ) {
+        score += 14;
+    }
+
+    if (
+        scheme.category === "health" &&
+        profile.disability === "yes"
+    ) {
+        score += 8;
+    }
+
+    /* Social category */
+
+    if (
+        profile.category === "sc" ||
+        profile.category === "st"
+    ) {
+        if (
+            scheme.id === 33 ||
+            scheme.id === 34 ||
+            scheme.id === 35 ||
+            scheme.id === 49 ||
+            scheme.id === 50
+        ) {
+            score += 12;
+        }
+    }
+
+    /* Orphan / family support */
+
+    if (
+        profile.orphan === "yes" &&
+        scheme.category === "social"
+    ) {
+        score += 10;
+    }
+
+    /* Rural */
+
+    if (
+        profile.rural === "yes" &&
+        (
+            scheme.category === "farmer" ||
+            scheme.category === "employment" ||
+            scheme.category === "social"
+        )
+    ) {
+        score += 5;
+    }
+
+    /* Age signals */
+
+    if (
+        profile.age >= 18 &&
+        scheme.category === "employment"
+    ) {
+        score += 4;
+    }
+
+    if (
+        profile.age >= 18 &&
+        scheme.category === "business"
+    ) {
+        score += 4;
+    }
+
+    /* Women + girl-child related schemes */
+
+    if (
+        profile.gender === "female" &&
+        (
+            scheme.id === 15 ||
+            scheme.id === 16 ||
+            scheme.id === 17 ||
+            scheme.id === 40 ||
+            scheme.id === 41
+        )
+    ) {
+        score += 10;
+    }
+
+    return Math.min(99, score);
+}
+
+
+/* =========================================================
+   FORM SUBMISSION
+   ========================================================= */
+
+document.getElementById("schemeForm").addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+        userProfile = {
+
+            name:
+                document.getElementById("name").value,
+
+            email:
+                document.getElementById("email").value,
+
+            age:
+                Number(document.getElementById("age").value),
+
+            gender:
+                document.getElementById("gender").value,
+
+            state:
+                document.getElementById("state").value,
+
+            category:
+                document.getElementById("category").value,
+
+            income:
+                document.getElementById("income").value,
+
+            parents:
+                getRadioValue("parents"),
+
+            orphan:
+                document.getElementById("orphan").value,
+
+            dependents:
+                document.getElementById("dependents").value,
+
+            occupation:
+                document.getElementById("occupation").value,
+
+            need:
+                document.getElementById("need").value,
+
+            disability:
+                document.getElementById("disability").value,
+
+            unemployed:
+                document.getElementById("unemployed").value,
+
+            rural:
+                document.getElementById("rural").value
+
+        };
+
+
+        currentResults = schemes
+            .map(scheme => ({
+                ...scheme,
+                match: calculateMatch(scheme, userProfile)
+            }))
+            .sort((a, b) => b.match - a.match)
+            .slice(0, 5);
+
+
+        renderResults();
+
+        showPage("resultsPage");
+
+    }
+);
+
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+
+function renderResults() {
+
+    const list =
+        document.getElementById("resultList");
+
+    const greeting =
+        document.getElementById("resultGreeting");
+
+    greeting.textContent =
+        "Schemes that may match you, " +
+        userProfile.name.split(" ")[0];
+
+
+    list.innerHTML = "";
+
+
+    currentResults.forEach((scheme, index) => {
+
+        let matchClass = "match-medium";
+
+        if (scheme.match >= 80) {
+            matchClass = "match-high";
+        }
+
+        if (scheme.match < 60) {
+            matchClass = "match-low";
+        }
+
+
+        const card =
+            document.createElement("div");
+
+        card.className = "scheme-card";
+
+
+        card.innerHTML = `
+
+            <div>
+
+                <div class="scheme-code">
+                    MATCH ${String(index + 1).padStart(2, "0")}
+                    • ${scheme.code}
+                </div>
+
+                <h3>${scheme.name}</h3>
+
+                <p>
+                    ${scheme.description}
+                </p>
+
+                <div class="scheme-tags">
+
+                    <span class="scheme-tag">
+                        ${scheme.category}
+                    </span>
+
+                    <span class="scheme-tag">
+                        Government scheme
+                    </span>
+
+                    <span class="scheme-tag">
+                        Explore eligibility
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="match-box">
+
+                <div class="match-percent ${matchClass}">
+                    ${scheme.match}%
+                </div>
+
+                <div class="match-label">
+                    Match
+                </div>
+
+                <button
+                    class="view-btn"
+                    onclick="openScheme(${scheme.id})">
+                    View details
+                </button>
+
+            </div>
+        `;
+
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   SCHEME DETAIL
+   ========================================================= */
+
+function openScheme(id) {
+
+    const scheme =
+        schemes.find(item => item.id === id);
+
+    if (!scheme) return;
+
+
+    const result =
+        currentResults.find(item => item.id === id);
+
+    const match =
+        result ? result.match : 0;
+
+
+    const detail =
+        document.getElementById("schemeDetail");
+
+
+    detail.innerHTML = `
+
+        <div class="detail-hero">
+
+            <div class="code">
+                ${scheme.code}
+            </div>
+
+            <h2>
+                ${scheme.name}
+            </h2>
+
+            <p>
+                ${scheme.description}
+            </p>
+
+        </div>
+
+
+        <div class="detail-layout">
+
+            <main class="detail-content">
+
+
+                <section class="detail-section">
+
+                    <h3>
+                        About the scheme
+                    </h3>
+
+                    <p>
+                        ${scheme.description}
+                    </p>
+
+                </section>
+
+
+                <section class="detail-section">
+
+                    <h3>
+                        Who can benefit?
+                    </h3>
+
+                    <p>
+                        ${scheme.eligibility}
+                    </p>
+
+                </section>
+
+
+                <section class="detail-section">
+
+                    <h3>
+                        Benefits
+                    </h3>
+
+                    <ul>
+
+                        ${scheme.benefits
+                            .map(item =>
+                                `<li>${item}</li>`
+                            )
+                            .join("")
+                        }
+
+                    </ul>
+
+                </section>
+
+
+                <section class="detail-section">
+
+                    <h3>
+                        Documents generally required
+                    </h3>
+
+                    <ul>
+
+                        ${scheme.documents
+                            .map(item =>
+                                `<li>${item}</li>`
+                            )
+                            .join("")
+                        }
+
+                    </ul>
+
+                </section>
+
+
+                <section class="detail-section">
+
+                    <h3>
+                        How to apply
+                    </h3>
+
+                    <p>
+                        ${scheme.how}
+                    </p>
+
+                </section>
+
+
+                <section class="detail-section">
+
+                    <h3>
+                        Important note
+                    </h3>
+
+                    <p>
+                        Eligibility and benefits can change according
+                        to current government notifications, state
+                        implementation and individual circumstances.
+                        Always verify the current requirements on the
+                        official portal before applying.
+                    </p>
+
+                </section>
+
+
+            </main>
+
+
+            <aside class="detail-sidebar">
+
+
+                <div class="match-summary">
+
+                    <div class="number">
+                        ${match}%
+                    </div>
+
+                    <span>
+                        Profile match
+                    </span>
+
+                </div>
+
+
+                <div class="action-box">
+
+                    <h3>
+                        Application
+                    </h3>
+
+                    <p style="font-size:12px;color:#69747c;">
+                        Use the official government portal for the
+                        latest eligibility and application process.
+                    </p>
+
+                    <button
+                        class="apply-btn"
+                        onclick="window.open(
+                            '${scheme.link}',
+                            '_blank'
+                        )">
+                        Visit Official Portal ↗
+                    </button>
+
+                </div>
+
+
+                <div class="action-box">
+
+                    <h3>
+                        Scheme category
+                    </h3>
+
+                    <p style="font-size:13px;">
+                        ${scheme.category}
+                    </p>
+
+                </div>
+
+
+            </aside>
+
+        </div>
+    `;
+
+
+    showPage("detailPage");
+
+}
+
+
+/* =========================================================
+   BACK TO RESULTS
+   ========================================================= */
+
+function showResults() {
+
+    showPage("resultsPage");
+
+}
+
+
+/* =========================================================
+   PROGRESS BAR
+   ========================================================= */
+
+const formInputs =
+    document.querySelectorAll(
+        "#schemeForm input, #schemeForm select"
+    );
+
+
+formInputs.forEach(input => {
+
+    input.addEventListener("change", updateProgress);
+    input.addEventListener("input", updateProgress);
+
+});
+
+
+function updateProgress() {
+
+    let filled = 0;
+
+    let important = 0;
+
+    formInputs.forEach(input => {
+
+        if (
+            input.type === "radio"
+        ) {
+
+            if (
+                document.querySelector(
+                    `input[name="${input.name}"]:checked`
+                )
+            ) {
+                filled++;
+            }
+
+        } else if (input.value) {
+
+            filled++;
+
+        }
+
+        important++;
+
+    });
+
+
+    let percent =
+        Math.round(
+            Math.min(100, (filled / important) * 100)
+        );
+
+
+    if (percent < 25) {
+        percent = 25;
+    }
+
+
+    document.getElementById("progressBar")
+        .style.width = percent + "%";
+
+
+    document.getElementById("progressText")
+        .textContent = percent + "%";
+
+}
+
+</script>
+
+</body>
+</html>
